@@ -18,6 +18,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-projectionist'
+plug 'tpope/vim-rails'
 
 "--------------------------
 " utility
@@ -80,6 +81,7 @@ Plug 'dracula/vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'drewtempelmeyer/palenight.vim'
 
 "--------------------------
 " snippets
@@ -88,5 +90,9 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'josemarluedke/ember-vim-snippets'
 
+" Vim Airline
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+=
 " Add plugins to &runtimepath
 call plug#end()

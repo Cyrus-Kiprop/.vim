@@ -1,10 +1,18 @@
+scriptencoding utf-8
+set encoding=utf-8
+set termencoding=utf-8
+
 " Use Vim settings, rather then Vi settings (much better!).
 set nocompatible
+
+execute pathogen#infect()
 
 " Plugins
 silent! runtime bundles.vim
 
-" ---------------------------------------------------------------------------
+" Remap escape to the ii button
+imap ii <Esc>
+
 " General
 " ---------------------------------------------------------------------------
 
@@ -25,10 +33,6 @@ set noswapfile
 set hidden
 
 set history=1000  "store lots of :cmdline history
-
-" Set character encoding to use in vim
-set encoding=utf-8
-set termencoding=utf-8
 
 " Add '-' as recognized word symbol. e.g dw delete all 'foo-bar' instead just 'foo'
 set iskeyword+=-
@@ -73,15 +77,15 @@ set nonumber
 set relativenumber number " show relative numbers
 set splitbelow
 set splitright
-set list
 set completeopt=longest,menuone
-" set listchars=trail:·
+set list
+set listchars=eol:⏎,trail:•
 
 " some stuff to get the mouse going in term
-set mouse=a
-if !has('nvim')
-  set ttymouse=xterm2
-endif
+" set mouse=" a
+" if !has('nvim')
+  " set ttymouse=xterm2
+" endif
 
 " ---------------------------------------------------------------------------
 " Text Formatting
@@ -92,7 +96,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab!
 
-set nowrap
+set wrap
 set textwidth=79
 set formatoptions=n
 
@@ -185,7 +189,13 @@ nnoremap <silent> t :FZF<cr>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
-"Key mapping for textmate-like indentation
+" key mapping for shifting panes
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Key mapping for textmate-like indentation
 nmap <D-[> <<
 nmap <D-]> >>
 vmap <D-[> <gv
@@ -335,6 +345,16 @@ endif
 map <leader>l :TagbarToggle <cr>
 let g:tagbar_autofocus=1
 
+let g:tagbar_type_javascript = {
+    \ 'ctagstype' : 'JavaScript',
+    \ 'kinds'     : [
+        \ 'o:objects',
+        \ 'f:functions',
+        \ 'a:arrays',
+        \ 's:strings'
+    \ ]
+\ }
+
 " Generate ctags for all bundled gems as well
 map <leader>rtg :!ctags --extra=+f --languages=-javascript --exclude=.git --exclude=log -R * `rvm gemdir`/gems/* `rvm gemdir`/bundler/gems/*<CR><C-M>
 
@@ -345,11 +365,12 @@ set complete=.,w,b,u,t,i
 "-------------------------
 " Airline
 set laststatus=2
-let g:airline_theme = 'base16_nord'
-let g:airline_powerline_fonts = 0
+" let g:airline_theme = 'base16_nord'
+let g:airline_powerline_fonts = 1
 let g:airline_symbols = { 'linenr': '␤ ', 'branch': '⎇ ' }
 let g:airline_inactive_collapse=0
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_mode_map = {
       \ 'n' : 'N',
       \ 'i' : 'I',
@@ -480,7 +501,6 @@ autocmd FocusLost * :call <SID>StripTrailingWhitespaces() | silent! wa
 " ---------------------------------------------------------------------------
 " GUI
 " ---------------------------------------------------------------------------
-
 if has("termguicolors") && !($TERM_PROGRAM == "Apple_Terminal")
   set termguicolors
 endif
@@ -488,11 +508,13 @@ endif
 " colorscheme
 if !exists("g:gui_oni")
   if has('nvim')
-    color challenger_deep
+    " color challenger_deep
     " color base16-oceanicnext
+    color palenight
   else
+    color palenight
     " color onedark
-    color OceanicNext
+    " color OceanicNext
   endif
 endif
 
@@ -541,7 +563,7 @@ set colorcolumn=80
 " highlight ColorColumn guibg=#1e1e1e
 highlight clear SignColumn
 
-set fillchars+=vert:│
+set fillchars+=vert:⇥
 
 " ---------------------------------------------------------------------------
 " SuperTab & Auto Complete
@@ -580,7 +602,6 @@ let g:coc_global_extensions = [
 
 " Use <c-space> for trigger completion.
 imap <silent><expr> <c-space> coc#refresh()
-
 " Use <space> + y to show the list of yank
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
@@ -655,3 +676,35 @@ endif
 " ---------------------------------------------------------------------------
 set exrc
 set secure
+
+
+" set background=dark
+" colorscheme palenight
+" let g:lightline = { 'colorscheme': 'palenight' }
+let g:airline_theme = "gruvbox"
+
+" if (has("nvim"))
+  " "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" endif
+
+" "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+" "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+let g:gruvbox_italic=1
+
+" " Italics for my favorite color scheme
+" let g:palenight_terminal_italics=1
+"
+"
+colorscheme gruvbox
+ " let g:airline_theme = "gruvbox"
+
+ let g:gruvbox_invert_tabline = '1'
+let g:gruvbox_improved_warnings = '1'
+let g:gruvbox_vert_split = "bg1"
+let g:gruvbox_contrast_dark = "hard"
